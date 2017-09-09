@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>paper sound v8</title>
+    
+      <link rel="stylesheet" href="css/style.css">
+  
+</head>
+
+<body>
+    <head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css"     href="css/main.css">
+ </head>
+
+<body>
+   
+class="precious-canvas-e"></canvas>
+  
+ <div class="bottom-e">drag the mouse around to manipulate and layer the sound </div>
+     
+</body>
+
+<canvas id="myCanvas" resize></canvas>
+
+<script type="text/paperscript" canvas="myCanvas">
+
+  
+var mousePoint = view.center;
+var amount = 13;
+          
+function onMouseMove(event) {
+mousePoint = event.point;
+
+start();
+init();
+
+setTimeout(function(){
+
+mousePoint = event.point;
+project.activeLayer.removeChildren();
+
+}, 3500); 
+
+}
+
+
+
+
+
+function init() {
+  a = Math.random()*3;
+   b = Math.random()*3;
+   c = ['#B3DBDB','#C6DAED','#FCFAEB','#F7CCD2','#DAD0EE'];
+     
+   rc = c[Math.floor(Math.random() * c.length)];
+    var colors = [ rc, 'black'];
+  
+   for (var i = 0; i < amount; i++) {
+
+	  var rect = new Rectangle([0, 0], [a, b]);
+    rect.center = mousePoint;
+    var path = new Path.Rectangle(rect, 117);
+    path.fillColor =colors[i % 2];
+    var scale = (1- i / amount) * 83;
+    path.scale(scale);
+    }      
+
+}
+                                       
+var children = project.activeLayer.children;
+
+function onFrame(event) {
+	for (var i = 0, l = children.length; i < l; i++) {
+		var item = children[i];
+		var delta = (mousePoint - item.position) / (i);
+		item.rotate(Math.sin((event.count + 4*i) / 10) * 3);
+		if (delta.length > 0.1)
+			item.position += delta;
+
+
+	}
+} 
+init(); 
+
+</script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.9.22/paper-full.min.js'></script>
+  <script src="js/index.js"></script>
+
+
+</body>
+</html>
